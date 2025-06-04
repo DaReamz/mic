@@ -1,7 +1,7 @@
 // Import required packages
 const { Client } = require("guilded.js");
 const axios = require("axios");
-require("dotenv").config( { path: '/home/danbdreamz/ish/ish.env' } );
+require("dotenv").config();
 const fs = require('fs');
 
 // --- Configuration ---
