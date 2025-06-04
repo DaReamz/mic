@@ -3,12 +3,13 @@ const { Client } = require("guilded.js");
 const axios = require("axios");
 require("dotenv").config();
 const fs = require('fs');
+const express = require('express'); // Add this if you don't have it
 
 // --- Configuration ---
 const guildedToken = process.env.GUILDED_TOKEN;
 const shapesApiKey = process.env.SHAPES_API_KEY;
 const shapeUsername = process.env.SHAPE_USERNAME;
-
+const PORT = process.env.PORT || 3000; // Add this line
 const SHAPES_API_BASE_URL = "https://api.shapes.inc/v1";
 const SHAPES_MODEL_NAME = `shapesinc/${shapeUsername}`;
 
@@ -28,6 +29,16 @@ if (!guildedToken || !shapesApiKey || !shapeUsername) {
 
 // Initialize Guilded Client
 const client = new Client({ token: guildedToken });
+
+// Add Express server for Railway health checks
+const app = express();
+app.get('/', (req, res) => {
+    res.send(`🤖 ${shapeUsername} bot is running!`);
+});
+
+app.listen(PORT, () => {
+    console.log(`Bot web server listening on port ${PORT}`);
+});
 
 // File path for storing active channels and known bots
 const channelsFilePath = './active_channels.json';
